@@ -2,7 +2,7 @@
 // @name        Bsky "Clink'n'Save" mini
 // @description Bsky image saver, minimal edition
 // @namespace   gh.alttiri
-// @version     0.0.4-2024.11.18
+// @version     0.0.5-2024.11.18
 // @match       https://bsky.app/*
 // @grant       GM_xmlhttpRequest
 // @supportURL  https://github.com/AlttiRi/twitter-click-and-save/issues/47
@@ -19,6 +19,12 @@
 
 
 const fetch = GM_fetch;
+
+
+// The substrings that are required to remove (replace with " ") to make the date string able to be parsed.
+const dateGarbageParts = [
+    " at ", // [english] "November 18, 2024 at 11:44 AM" [bad] -> "November 18, 2024 11:44 AM" [ok]
+];
 
 
 const ws = new WeakSet();
@@ -60,7 +66,11 @@ setInterval(() => {
 
             function parseDate(ariaLabel) {
                 // console.log("parseDate", ariaLabel);
-                return new Date(ariaLabel.replace(" at ", " ")).toString(); // fix "Invalid Date"
+                let dateString = ariaLabel;
+                for (const part of dateGarbageParts) {
+                    dateString = dateString.replace(part, " "); // fix "Invalid Date"
+                }
+                return new Date(dateString).toString();
             }
 
             function parseInfo(hrefAttr) {
