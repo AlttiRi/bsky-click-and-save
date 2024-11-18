@@ -1,9 +1,9 @@
-# bsky-click-and-save
+# [bsky](https://bsky.app/)-click-and-save
 Quick made minimal version.
 
 ---
 
-Here is the **MINIMAL** usable version for an **image** downloading made in 1 hour.
+Here is the **MINIMAL** usable version for Bluesky **image** downloading made in 1 hour.
 
 Right click (the context menu event) on the image to download it.
 
