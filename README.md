@@ -16,6 +16,8 @@ Can it be done better? Of course. Maybe later.
 
 ### Note
 
+`/post/` URLs are not supported, only timeline and `/profile/` URLs.
+
 After opening an image spoiler await for 1.2 seconds until the script is handled the image. 
 
 _(Yeah, I just need to use `MutationObserver` to fix it.)_
