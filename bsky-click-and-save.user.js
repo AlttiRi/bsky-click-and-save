@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name        Bsky "Clink'n'Save" minimal edition
+// @name        Bsky "Clink'n'Save" mini
 // @description Bsky image saver, minimal edition
 // @namespace   gh.alttiri
-// @version     0.0.3-2024.11.18
+// @version     0.0.4-2024.11.18
 // @match       https://bsky.app/*
 // @grant       GM_xmlhttpRequest
 // @supportURL  https://github.com/AlttiRi/twitter-click-and-save/issues/47
@@ -71,9 +71,9 @@ setInterval(() => {
             const date = dateParsed === "Invalid Date" ? "" : dateParsed;
             const {profile, post} = parseInfo(hrefAttr);
 
-            const dateStr = date ? dateToDayDateString(date) : "";
+            const dateStr = date ? "—" + dateToDayDateString(date) : "";
 
-            const filenameResult = `[bsky] ${profile}—${dateStr}—${post}—${filename}`;
+            const filenameResult = `[bsky] ${profile}${dateStr}—${post}—${filename}`;
             // console.log("filename", filename);
 
             (async function download(url, filename) {
