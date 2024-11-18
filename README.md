@@ -16,11 +16,12 @@ Can it be done better? Of course. Maybe later.
 
 ### Note
 
-- `/post/` URLs are not supported, only timeline and `/profile/` URLs.
+- `/post/` URLs are not supported (an opened post), only timeline URLs (`/profile/`, `/search?=`, "Home" page).
 
-- After opening an image spoiler await for 1.2 seconds until the script is handled the image. 
+- After opening an image spoiler await for 1.2 seconds until the script is handled the image.
 
-_(Yeah, I just need to use `MutationObserver` to fix it.)_
+
+  _(Yeah, I just need to use `MutationObserver` to fix it.)_
 
 ---
 
