@@ -2,7 +2,7 @@
 // @name        Bsky "Clink'n'Save" mini
 // @description Bsky image saver, minimal edition
 // @namespace   gh.alttiri
-// @version     0.0.5-2024.11.18
+// @version     0.0.6-2024.11.18
 // @match       https://bsky.app/*
 // @grant       GM_xmlhttpRequest
 // @supportURL  https://github.com/AlttiRi/twitter-click-and-save/issues/47
@@ -26,13 +26,30 @@ const dateGarbageParts = [
     " at ", // [english] "November 18, 2024 at 11:44 AM" [bad] -> "November 18, 2024 11:44 AM" [ok]
 ];
 
+addCSS(`
+.ujs-downloading {
+    height: 100%;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+}
+.ujs-downloaded {
+    height: 100%;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 1;
+}
+.height100 {
+    height: 100%;
+}
+`);
 
 const ws = new WeakSet();
 setInterval(() => {
     const elems = [...document.querySelectorAll(`img[src^="https://cdn.bsky.app/img/feed_thumbnail/"]`)];
     const elemsFiltered = elems.filter(el => !ws.has(el));
     if (elemsFiltered.length) {
-        console.log(elemsFiltered);
+        // console.log(elemsFiltered);
     }
 
     elemsFiltered.forEach(el => {
@@ -86,12 +103,24 @@ setInterval(() => {
             const filenameResult = `[bsky] ${profile}${dateStr}—${post}—${filename}`;
             // console.log("filename", filename);
 
-            (async function download(url, filename) {
-                const resp = await fetch(url);
-                const blob = await resp.blob();
-                downloadBlob(blob, filename, url);
-            })(imageLink, filenameResult);
+            void (async function download(url, filename) {
+                const shadowElem = document.createElement("div");
+                shadowElem.classList.add("ujs-downloading");
+                el.parentElement.classList.add("height100");
+                el.after(shadowElem);
+                try {
+                    const resp = await fetch(url);
+                    const blob = await resp.blob();
+                    downloadBlob(blob, filename, url);
 
+                    shadowElem.classList.remove("ujs-downloading");
+                    shadowElem.classList.add("ujs-downloaded");
+                    await sleep(500);
+                } finally {
+                    shadowElem.remove();
+                    el.parentElement.classList.remove("height100");
+                }
+            })(imageLink, filenameResult);
         });
     });
 
@@ -213,4 +242,15 @@ class DateFormatter {
     get DD() { return pad0(this.date[`get${this.utc}Date`]()); }
     get YYYY() { return pad0(this.date[`get${this.utc}FullYear`](), 4); }
     get YY() { return this.YYYY.slice(2); }
+}
+
+
+function addCSS(css) {
+    const styleElem = document.createElement("style");
+    styleElem.textContent = css;
+    document.body.append(styleElem);
+    return styleElem;
+}
+function sleep(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
 }
