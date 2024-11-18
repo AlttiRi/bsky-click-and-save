@@ -11,5 +11,5 @@ Is the script usable and useful? Yes.
 
 Can it be done better? Of course. Maybe later.
 
-### To install click on:
+### To install click on the link:
 - https://github.com/AlttiRi/bsky-click-and-save/raw/refs/heads/master/bsky-click-and-save.user.js
