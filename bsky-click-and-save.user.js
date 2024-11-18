@@ -2,7 +2,7 @@
 // @name        Bsky "Clink'n'Save" minimal edition
 // @description Bsky image saver, minimal edition
 // @namespace   gh.alttiri
-// @version     0.0.1-2024.11.18
+// @version     0.0.2-2024.11.18
 // @match       https://bsky.app/*
 // @grant       GM_xmlhttpRequest
 // @supportURL  https://github.com/AlttiRi/twitter-click-and-save/issues/47
@@ -32,7 +32,7 @@ setInterval(() => {
     elemsFiltered.forEach(el => {
         el.addEventListener("contextmenu", ev => {
             ev.preventDefault();
-            console.log("click", el);
+            // console.log("click", el);
             const postElem = el.closest(`[role="link"]`);
             if (!postElem) {
                 return;
@@ -42,7 +42,7 @@ setInterval(() => {
                 return;
             }
 
-            console.log(el.src);
+            // console.log(el.src);
             const imageLink = el.src.replace("/feed_thumbnail/", "/feed_fullsize/");
             let filename = imageLink.match(/[^\/]+$/)?.[0];
             if (!filename) {
@@ -54,12 +54,12 @@ setInterval(() => {
             }
 
 
-            console.log("postLink", postLink);
+            // console.log("postLink", postLink);
             const hrefAttr = postLink.getAttribute("href");
             const ariaLabel = postLink.getAttribute("aria-label");
 
             function parseDate(ariaLabel) {
-                console.log("parseDate", ariaLabel);
+                // console.log("parseDate", ariaLabel);
                 return new Date(ariaLabel.replace(" at ", " ")).toString(); // fix "Invalid Date"
             }
 
@@ -74,7 +74,7 @@ setInterval(() => {
             const dateStr = date ? dateToDayDateString(date) : "";
 
             const filenameResult = `[bsky] ${profile}—${post}—${dateStr}—${filename}`;
-            console.log("filename", filename);
+            // console.log("filename", filename);
 
             (async function download(url, filename) {
                 const resp = await fetch(url);
