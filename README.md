@@ -25,5 +25,5 @@ Can it be done better? Of course. Maybe later.
 
 ---
 
-See also: 
+See also (discussion): 
 - https://github.com/AlttiRi/twitter-click-and-save/issues/47
