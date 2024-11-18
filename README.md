@@ -14,6 +14,12 @@ Can it be done better? Of course. Maybe later.
 ### To install click on the link:
 - https://github.com/AlttiRi/bsky-click-and-save/raw/refs/heads/master/bsky-click-and-save.user.js
 
+### Note
+
+After opening an image spoiler await for 1.2 seconds until the script is handled the image. 
+
+_(Yeah, I just need to use `MutationObserver` to fix it.)_
+
 ---
 
 See also: 
