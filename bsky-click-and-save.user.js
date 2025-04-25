@@ -2,10 +2,10 @@
 // @name        Bsky "Clink'n'Save" mini
 // @description Bsky image saver, minimal edition
 // @namespace   gh.alttiri
-// @version     0.0.6-2024.11.18
+// @version     0.0.7-2025.04.25
 // @match       https://bsky.app/*
 // @grant       GM_xmlhttpRequest
-// @supportURL  https://github.com/AlttiRi/twitter-click-and-save/issues/47
+// @supportURL  https://github.com/AlttiRi/bsky-click-and-save/issues
 // @downloadURL https://github.com/AlttiRi/bsky-click-and-save/raw/refs/heads/master/bsky-click-and-save.user.js
 // @license     GPL-3.0
 // ==/UserScript==
@@ -16,6 +16,7 @@
 // Right mouse click ("Context Menu" event) to download an image.
 
 // https://github.com/AlttiRi/twitter-click-and-save/issues/47
+// https://github.com/AlttiRi/bsky-click-and-save
 
 
 const fetch = GM_fetch;
@@ -60,7 +61,7 @@ setInterval(() => {
             if (!postElem) {
                 return;
             }
-            const postLink = postElem.querySelector(`a[href^="/profile/"][dir="auto"]`);
+            const postLink = postElem.querySelector(`a[href^="/profile/"][dir="auto"][data-tooltip]`);
             if (!postLink) {
                 return;
             }
@@ -101,7 +102,7 @@ setInterval(() => {
             const dateStr = date ? "—" + dateToDayDateString(date) : "";
 
             const filenameResult = `[bsky] ${profile}${dateStr}—${post}—${filename}`;
-            // console.log("filename", filename);
+            // console.log("filename", filenameResult);
 
             void (async function download(url, filename) {
                 const shadowElem = document.createElement("div");
